@@ -20,9 +20,12 @@ To better resolve your concerns, we have conducted extra experiments by includin
 A1: Thank you for this comment. We address this concern as follows.
 1. We politely disagree with the claim saying our theory is “straightforward and superfluous”. Perhaps our accessible presentation gives the impression that the theoretical justification is straightforward. Below, we point out the non-trivial challenges that needed to be solved to develop the theoretical justification. 
 2. Since Lemma 4.5 was quoted in this comment, we will use it as an example to demonstrate the challenges. Firstly, we would like to kindly clarify that Lemma 4.5 does not rely on an “assumption” but a well-derived result from Lemma 4.4, that as the sample size increases, the distance to the nearest neighbor approaches 0. The proof of Lemma 4.4 is not trivial since it relies on the existence of a Lipschitz continuous oracle classifier (an ideal classifier outputting ground truth labels), which has been shown to be not universally possible for classification problems [3, 4, 5]. We address this challenge by utilizing the well-separation property of the image classification problem (see Def 4.1), which has been well observed in the literature [6], based on which we prove that such an oracle classifier exists in our formulation (see Lemma 4.3) and pave the way for developing principled accuracy estimators with statistical guarantees.
-3. We further conducted experiments to investigate the distance to the nearest neighbor (min_x’ dist(x,x’)) as sample size (s) increases. We report results with different feature extractors (ResNet-18 and SwinV2-t) as well as different metrics (L_inf, L1, and L2) on the test split of TinyImageNet dataset, as summarized below.
-  **MIN DIST V.S. SAMPLE SIZE FIGURE (RESNET18, 50)**
-  It can be clearly seen that the distance to the sampled nearest neighbour quickly approaches 0 as sample size increases. This could be attributable to the fact that we are sampling from real images. With properly pre-trained feature extractors, the possible image embeddings could be restricted to a subspace rather than pervade the whole high-dimensional space, which can significantly reduce the required number of samples and give us meaningfully small distances to the sampled nearest neighbours. 
+3. We further conducted experiments to investigate the distance to the nearest neighbor (min_x’ dist(x,x’)) as sample size (s) increases. We report results with different feature extractors (ResNet-18 and SwinV2-t) as well as different metrics (L_inf, L1, and L2) on the test split of TinyImageNet dataset, as shown below.
+
+![alt text](https://github.com/OCCAM2024/OCCAM/blob/main/min_dist_res18.png?raw=true)
+![alt text](https://github.com/OCCAM2024/OCCAM/blob/main/min_dist_swinv2t.png?raw=true)
+
+It can be clearly seen that the distance to the sampled nearest neighbour quickly approaches 0 as sample size increases. This could be attributable to the fact that we are sampling from real images. With properly pre-trained feature extractors, the possible image embeddings could be restricted to a subspace rather than pervade the whole high-dimensional space, which can significantly reduce the required number of samples and give us meaningfully small distances to the sampled nearest neighbours. 
 
 
 **Q2: Following the theoretical exposition, the formulation of the problem into an integer linear programming problem is straightforward.**
@@ -61,7 +64,7 @@ A4: Thank you for this valuable comment. We address your concerns below.
 2. We use logits from the last layer of ML classifiers as the features (see Sec 5.1), which are part of the standard outputs from common commercial APIs (e.g., Google Cloud Vision API [10], Microsoft Azure Vision API [11]). Also, the rich family of publicly accessible pre-trained ML models ensures the accessibility of feature extractors and the usability of our approach.
 3. In our approach, the cheapest ML classifier is used to extract features by default, which is supposed to incur a small cost (e.g., the normalized cost of ResNet-18 w.r.t. SwinV2-b is only 0.15). Moreover, the computation results in feature extraction are reused to generate predictions which saves the classification costs at later stages and alleviates the concern of “potentially significant” extraction costs. 
 
-Q5: The authors should shorten the theoretical section as it provides no meaningful insight, and instead focus on more extensive experiments if possible.
+**Q5: The authors should shorten the theoretical section as it provides no meaningful insight, and instead focus on more extensive experiments if possible.**
 
 A5. Thank you for the comment. We politely disagree with the claim saying our theory “provides no meaningful insight”. We would like to point out the important implications of our theoretical findings.
 1. (Lemma 4.3) A Lipschitz continuous classifier of perfect accuracy (oracle classifier) is possible for the image classification task, which is non-trivial because such an oracle classifier has been found to be not universally tractable for general classification problems [3, 4, 5]. 
@@ -80,7 +83,9 @@ A7: Thank you for this comment. We have investigated the estimation error (diffe
 
 For brevity, on TinyImageNet, we report the estimation error in the accuracy of all 8 classifiers (ResNet-[18, 34, 50, 101, 152], and SwinV2-[t, s, b]), under L_inf metric. The patterns are similar with other metrics and feature extractors.
 
-**EST ERROR FIGURES (ResNet-18, ResNet-50, and SwinV2-t)**
+![alt text](https://github.com/OCCAM2024/OCCAM/blob/main/est_error_res18.png?raw=true)
+![alt text](https://github.com/OCCAM2024/OCCAM/blob/main/est_error_res50.png?raw=true)
+![alt text](https://github.com/OCCAM2024/OCCAM/blob/main/est_error_swinv2t.png?raw=true)
 
 It is clear that the estimation error of our accuracy estimator continues to decrease as the sample size (s) increases, which demonstrates the effectiveness of our accuracy estimator.
 
