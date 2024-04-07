@@ -1,4 +1,4 @@
-# UAI 2024 OCCAM Rebuttal (Reviewer EKht)
+# Response to Reviewer EKht
 
 We thank you for your careful review and address your concerns below. 
 
